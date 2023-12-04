@@ -1,32 +1,24 @@
 package hello.core.order;
 
+import hello.core.annotation.MainDiscountPolicy;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor // final 변수가 있으면 해당 변수를 초기화하는 생성자를 만들어 줌
+//@RequiredArgsConstructor // final 변수가 있으면 해당 변수를 초기화하는 생성자를 만들어 줌
 public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
     private final DiscountPolicy discountPolicy;
 
-//    @Autowired
-//    void setMemberRepository() {
-//        this.memberRepository = memberRepository;
-//    }
-//    @Autowired
-//    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
-//        this.discountPolicy = discountPolicy;
-//    }
-
-
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    public OrderServiceImpl(MemberRepository memberRepository,@MainDiscountPolicy DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
